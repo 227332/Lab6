@@ -8,10 +8,11 @@ public class Utils {
 	final static int dim3 = 3;
 
 	/*
-	 * Metodo wrapper per il controllo della griglia Sudoku
+	 * Metodo per il controllo della griglia Sudoku
 	 */
 	static boolean check(int[][] matrix, boolean partial) {
 
+		//per ogni colonna...
 		for (int i = 0; i < dim; i++) {
 
 			// Ad ogni ciclo calcolo 3 array:
@@ -21,7 +22,7 @@ public class Utils {
 			int[] column = matrix[i].clone();
 
 			for (int j = 0; j < dim; j++) {
-				row[j] = matrix[j][i];
+				row[j] = matrix[j][i];//vettore contenente la colonna i 
 				square[j] = matrix[(i / dim3) * dim3 + j / dim3][i * dim3 % dim + j % dim3];
 			}
 
@@ -33,7 +34,7 @@ public class Utils {
 	}
 
 	/*
-	 * Valido un array di una soluzione parziale (puÃ² contenere degli 0)
+	 * Valido un array di una soluzione parziale (ossia che può contenere degli 0)
 	 */
 	private static boolean validate(int[] check) {
 
@@ -41,7 +42,7 @@ public class Utils {
 		Arrays.sort(check);
 		for (int i = 0; i < check.length - 1; i++) {
 			// Controllo che non ci siano elementi duplicati
-			if (check[i] != 0 && check[i] == check[i + 1])
+			if (check[i] != 0 && check[i] == check[i + 1])//WOW,Ecco perchè prima ordina il vettore!
 				return false;
 		}
 		return true;

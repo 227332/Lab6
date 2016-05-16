@@ -1,12 +1,13 @@
 package it.polito.tdp.sudoku.controller;
 
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.sudoku.model.Level;
-import it.polito.tdp.sudoku.model.RecursiveSudokuOne;
+import it.polito.tdp.sudoku.model.RecursiveSudoku;
 import it.polito.tdp.sudoku.model.SudokuGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,12 @@ public class SudokuController {
 	final static int levelEasy = 45;
 	final static int levelAdvanced = 50;
 	final static int levelExpert = 55;
+	
+	RecursiveSudoku model;
+	
+	public void setModel(RecursiveSudoku m){
+		model=m;
+	}
 	
     @FXML
     private ResourceBundle resources;
@@ -269,17 +276,30 @@ public class SudokuController {
     private Label lbl81;
     
     @FXML
-    private ChoiceBox<Level> levelChoice;
+    private ChoiceBox<Level> levelChoice;//ChoiceBox da cui posso scegliere 
+    									 //il livello di difficoltà
     
+    //matrice che conterrà la mia tabella sudoku
     int [][] sudokuMatrix;
     List<Label> labelList = new ArrayList<Label>(); 
     
     @FXML
     void doGenerate(ActionEvent event){
+    	// Devo generare un nuova nuova griglia di Sudoku
     	
-    	// Per generare un nuova nuova griglia di Sudoku
+    	
 		SudokuGenerator sg = new SudokuGenerator();
+		
+		//RICORDA: per farsi restituire l'item T di una ChoiceBox<T> devi chiamare
+		//il SelectionModel il quale va a prenderti l'Item selezionato in essa
+		//OSSIA: "ChoiceBox item selection is handled by SelectionModel".
+		//ATT: credo che si potesse fare anche solo direttamente .getValue() 
+		//invece di fare .getSelectionModel().getSelectedItem()
+		//perchè il Value di una ChoiceBox è + o - per def il suo SelectedItem
+		//Però il Value ha una sfumatura leggermente diversa, perciò non conviene usarlo
 		Level level = levelChoice.getSelectionModel().getSelectedItem();
+		
+		//uso il metodo che genera la tabella del sudoku con la difficoltà specificata
 		sudokuMatrix = sg.nextBoard(level.getLevelNumber());
 		
 		// Aggiorna la View
@@ -289,14 +309,13 @@ public class SudokuController {
     @FXML
     void doSolve(ActionEvent event){
     	
-    	// Controllo se l'utente ha giÃ  generato una matrice da cui partire.
+    	// Controllo se l'utente ha già  generato una matrice da cui partire
     	if (sudokuMatrix != null) {
     		
-	    	// Per risolvere una griglia Sudoku
-	    	RecursiveSudokuOne rsOne = new RecursiveSudokuOne();
 	    	
-	    	// Chiamo una funzione ricorsiva modificata che mi restituisce una sola soluzione.
-			int[][] solutionMatrix = rsOne.recursiveSudokuOne(sudokuMatrix);
+	    	
+	    	// Chiamo una funzione ricorsiva che mi restituisce una sola soluzione
+			int[][] solutionMatrix = model.recursiveSudoku(sudokuMatrix);
 			
 			if (solutionMatrix != null)
 				printMatrixOnScreen(solutionMatrix);
@@ -480,11 +499,14 @@ public class SudokuController {
         labelList.add(lbl80);
         labelList.add(lbl81);
         
+        //all'inizio setto tutte le caselle al valore 0
         for (Label l : labelList) {
         	l.setText("0");
         }
 
-        
+        //all'inizio creo i 3 oggetti di tipo Level associati ai 3 livelli di difficoltà che 
+        //posso avere nel gioco
+        //ATT: ricorda come si aggiungono nuovi Items in una ChoiceBox! Devi usare .getItems()
         levelChoice.getItems().add(new Level(levelEasy, "Easy"));
         levelChoice.getItems().add(new Level(levelAdvanced, "Advance"));
         levelChoice.getItems().add(new Level(levelExpert, "Expert"));

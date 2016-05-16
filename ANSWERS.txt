@@ -1,32 +1,32 @@
 - Cosa rappresenta il "livello" nel mio algoritmo ricorsivo?
 Il livello rappresenta una casella nella matrice del Sudoku (9*9). Esistono 81 livelli in totale.
 
-- Com'eÌ€ fatta una soluzione parziale?
-Una soluzione parziale Ã¨ una matrice Sukoku parzialmente completa
+- Com'è fatta una soluzione parziale?
+Una soluzione parziale è una matrice Sudoku parzialmente completa, ossia con degli zeri
 
-- Come faccio a riconoscere se una soluzione parziale eÌ€ anche completa?
-Una soluzione parziale (una matrice Sudoku) non puÃ² essere completa per definizione.
+- Come faccio a riconoscere se una soluzione parziale è anche completa?
+Una soluzione parziale (una matrice Sudoku) non può essere completa per definizione.
 
-- Data una soluzione parziale, come faccio a sapere se eÌ€ valida o se non eÌ€ valida? (nb. magari non posso)
+- Data una soluzione parziale, come faccio a sapere se è valida o se non è valida? (nb. magari non posso)
 Data una soluzione parziale devo controllare che non ci siano numeri (da 1 a 9) ripetuti per ogni riga, per ogni
 colonna e per ogni regione.
 
 
-- Data una soluzione completa, come faccio a sapere se eÌ€ valida o se non eÌ€ valida?
+- Data una soluzione completa, come faccio a sapere se è valida o se non è valida?
 Data una matrice completa devo controllare che tutte le caselle siano riempite con numeri da 1 a 9
 in modo tale che in ogni riga, in ogni colonna e in ogni regione siano presenti tutte le cifre da 1 a 9, quindi senza ripetizioni.
 
 
-- Qual eÌ€ la regola per generare tutte le soluzioni del livello+1 a partire da una soluzione parziale del livello corrente?
+- Qual è la regola per generare tutte le soluzioni del livello+1 a partire da una soluzione parziale del livello corrente?
 Data una griglia Sudoku completa fino alla i-esima casella (i-esimo livello) provo ad inserire tutti i numeri da 1 a 9 nella
 casella i+1 cercando una soluzione che non violi i vincoli del gioco.
 
 
-- Qual eÌ€ la struttura dati per memorizzare una soluzione (parziale o completa)?
+- Qual è la struttura dati per memorizzare una soluzione (parziale o completa)?
 Una matrice di interi (int [][] matrix)
 
 
-- Qual eÌ€ la struttura dati per memorizzare lo stato della ricerca (della ricorsione)?
+- Qual è la struttura dati per memorizzare lo stato della ricerca (della ricorsione)?
 Un intero dove salvare il livello della ricorsione raggiunto
 
 

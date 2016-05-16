@@ -1,5 +1,10 @@
 package it.polito.tdp.sudoku.model;
 
+/*
+ * Questa classe è un Java Beans che mi rappresenta come oggetto 
+ * il Livello di Difficoltà scelto per il mio Sudoku
+ */
+
 public class Level {
 	
 	private int levelNumber;
